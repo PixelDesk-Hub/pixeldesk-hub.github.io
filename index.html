@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PixelDesk - оптимизация ПК, Telegram-боты, сайты</title>
+<meta name="description" content="PixelDesk: удалённая оптимизация ПК через AnyDesk, Telegram-боты и сайты под ключ. Быстро, безопасно, от 500 ₽.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap">
+<style>
+:root{--bg:#120d26;--panel:#1c1640;--ink:#05030f;--text:#f1eeff;--muted:#a79fd0;--pink:#ff4fa3;--cyan:#3df5ff;--yel:#ffe14d;--grn:#5dff8a;--grid:rgba(61,245,255,.07);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3eedf;--panel:#fffaf0;--ink:#1d1533;--text:#1d1533;--muted:#5f567f;--grid:rgba(29,21,51,.07)}}
+:root[data-theme="light"]{--bg:#f3eedf;--panel:#fffaf0;--ink:#1d1533;--text:#1d1533;--muted:#5f567f;--grid:rgba(29,21,51,.07)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--text);font:22px/1.35 "VT323",ui-monospace,Menlo,Consolas,monospace;overflow-x:hidden;background-image:linear-gradient(var(--grid) 2px,transparent 2px),linear-gradient(90deg,var(--grid) 2px,transparent 2px);background-size:32px 32px}
+.px{font-family:"Press Start 2P",ui-monospace,Menlo,Consolas,monospace;line-height:1.5}
+canvas{position:fixed;inset:0;z-index:-1;width:100%;height:100%}
+.wrap{max-width:1060px;margin:0 auto;padding:0 18px}
+.boot{position:fixed;inset:0;z-index:99;background:var(--ink);color:var(--grn);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:bt 2.3s forwards;pointer-events:none}
+.boot b{display:block;width:240px;height:18px;border:3px solid var(--grn);padding:2px}
+.boot b i{display:block;height:100%;background:var(--grn);animation:ld 1.6s steps(12) forwards;width:0}
+@keyframes ld{to{width:100%}}@keyframes bt{0%,80%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+header{position:sticky;top:0;z-index:20;background:var(--panel);border-bottom:4px solid var(--ink)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--text);text-decoration:none}
+.logo i{width:22px;height:22px;background:var(--pink);box-shadow:inset -6px -6px 0 var(--cyan),3px 3px 0 var(--ink)}
+nav{display:flex;align-items:center;gap:18px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--cyan)}
+#clk{border:3px solid var(--ink);background:var(--bg);padding:2px 10px;color:var(--yel)}
+@media(max-width:760px){nav .l,#clk{display:none}}
+.btn{display:inline-block;font-family:"Press Start 2P",ui-monospace,monospace;font-size:12px;padding:14px 18px;background:var(--pink);color:#fff;text-decoration:none;border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);cursor:pointer;transition:transform .1s,box-shadow .1s;line-height:1.4}
+.btn:hover{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.btn:active{transform:translate(5px,5px);box-shadow:0 0 0 var(--ink)}
+.btn.c{background:var(--cyan);color:var(--ink)}.btn.y{background:var(--yel);color:var(--ink)}
+.btn.s{padding:9px 12px;font-size:10px}
+.win{background:var(--panel);border:4px solid var(--ink);box-shadow:8px 8px 0 var(--ink);margin-bottom:8px}
+.tb{display:flex;align-items:center;gap:8px;padding:8px 10px;background:linear-gradient(90deg,var(--pink),#8b5cf6);color:#fff;border-bottom:4px solid var(--ink);font-size:10px}
+.tb span{flex:1}.tb u{width:14px;height:14px;background:var(--yel);border:2px solid var(--ink);text-decoration:none}.tb u+u{background:var(--grn)}
+.tb.c2{background:linear-gradient(90deg,#0ea5e9,var(--cyan));color:var(--ink)}
+.tb.y2{background:linear-gradient(90deg,#f59e0b,var(--yel));color:var(--ink)}
+.bd{padding:24px}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:50px 0 30px}
+@media(max-width:860px){.hero{grid-template-columns:1fr}}
+h1{font-size:clamp(20px,4vw,36px);margin-bottom:18px}
+h1 em{font-style:normal;color:var(--cyan);text-shadow:3px 3px 0 var(--ink)}
+.lead{color:var(--muted);font-size:26px;margin-bottom:24px}
+.cta{display:flex;gap:14px;flex-wrap:wrap}
+.type{min-height:2.7em;color:var(--grn);font-size:26px;margin-bottom:12px}
+.cur{display:inline-block;width:12px;height:22px;background:var(--grn);vertical-align:-3px;animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:0}}
+.icons{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center}
+.icons a{color:var(--text);text-decoration:none;padding:16px 6px;border:3px dashed transparent;display:block}
+.icons a:hover{border-color:var(--cyan);background:rgba(61,245,255,.1)}
+.icons .e{font-size:44px;display:block;filter:drop-shadow(3px 3px 0 var(--ink))}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:30px 0}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+.st{background:var(--panel);border:4px solid var(--ink);box-shadow:6px 6px 0 var(--ink);padding:18px 10px;text-align:center}
+.st b{display:block;font-family:"Press Start 2P",ui-monospace,monospace;font-size:20px;color:var(--yel);margin-bottom:8px}
+.mq{overflow:hidden;white-space:nowrap;background:var(--ink);color:var(--grn);padding:10px 0;margin:36px -18px;border-block:4px solid var(--pink)}
+.mq div{display:inline-block;animation:m 30s linear infinite}.mq span{margin:0 24px}
+@keyframes m{to{transform:translateX(-50%)}}
+section{padding:46px 0}
+h2{font-size:clamp(16px,3vw,24px);margin-bottom:10px}
+h2:before{content:"> ";color:var(--pink)}
+.sub{color:var(--muted);font-size:24px;margin-bottom:30px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:860px){.g3{grid-template-columns:1fr}}
+.win h3{font-size:13px;margin:10px 0}
+.win p{color:var(--muted)}
+.win ul{list-style:none;padding:0;margin-top:12px}.win li:before{content:"■ ";color:var(--cyan);font-size:14px}
+.big{font-size:40px}
+.calc{display:grid;grid-template-columns:1.3fr .7fr;gap:0}
+@media(max-width:760px){.calc{grid-template-columns:1fr}}
+.opts label{display:flex;align-items:center;gap:12px;padding:10px 6px;border-bottom:2px dashed var(--muted);cursor:pointer}
+.opts input{appearance:none;-webkit-appearance:none;width:24px;height:24px;border:3px solid var(--ink);background:var(--bg);flex:none;cursor:pointer;margin:0}
+.opts input:checked{background:var(--grn);box-shadow:inset 0 0 0 4px var(--bg)}
+.opts label span{flex:1}.opts label b{color:var(--yel);font-weight:400}
+.res{background:var(--ink);color:var(--grn);padding:24px;display:flex;flex-direction:column;justify-content:center;gap:12px;border-left:4px solid var(--ink)}
+.res .tot{font-family:"Press Start 2P",ui-monospace,monospace;font-size:26px;color:var(--yel)}
+.res small{color:var(--muted);font-size:19px}
+.prc{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:860px){.prc{grid-template-columns:1fr}}
+.prc .n{font-family:"Press Start 2P",ui-monospace,monospace;font-size:22px;color:var(--yel);margin:10px 0}
+.prc ul{list-style:none;padding:0;margin:12px 0 20px}.prc li:before{content:"+ ";color:var(--grn)}
+.hot{position:relative}.hot:after{content:"HIT";position:absolute;top:-16px;right:14px;background:var(--yel);color:var(--ink);border:3px solid var(--ink);font-family:"Press Start 2P",monospace;font-size:10px;padding:5px 8px}
+.stp{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:860px){.stp{grid-template-columns:1fr 1fr}}@media(max-width:520px){.stp{grid-template-columns:1fr}}
+.stp div{border:4px solid var(--ink);background:var(--panel);padding:16px;box-shadow:5px 5px 0 var(--ink)}
+.stp em{font-style:normal;font-family:"Press Start 2P",monospace;color:var(--pink);font-size:18px;display:block;margin-bottom:8px}
+.bar{height:22px;border:4px solid var(--ink);background:var(--bg);margin-bottom:22px;padding:2px}
+.bar i{display:block;height:100%;width:0;background:repeating-linear-gradient(90deg,var(--grn) 0 12px,transparent 12px 16px);transition:width 1.6s steps(20)}
+.bar.in i{width:100%}
+.bub{background:var(--bg);border:3px solid var(--ink);padding:14px;margin-top:10px;position:relative}
+.stars{color:var(--yel);letter-spacing:3px}
+details{background:var(--panel);border:4px solid var(--ink);box-shadow:5px 5px 0 var(--ink);padding:12px 16px;margin-bottom:16px}
+summary{cursor:pointer;list-style:none;font-size:25px;color:var(--cyan)}
+summary::-webkit-details-marker{display:none}summary:before{content:"[+] ";color:var(--pink)}details[open] summary:before{content:"[-] "}
+details p{color:var(--muted);margin-top:8px}
+.fin{text-align:center}.fin .btn{margin-top:6px}
+footer{text-align:center;color:var(--muted);padding:26px 0 40px}
+.rev{opacity:0;transform:translateY(20px);transition:.5s steps(6)}.rev.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="boot px"><div>PIXELDESK OS v1.0</div><b><i></i></b><div style="font-size:10px">загрузка рабочего стола...</div></div>
+
+<header><div class="wrap">
+<a class="logo px" href="#top"><i></i>PIXELDESK</a>
+<nav><a class="l" href="#services">Услуги</a><a class="l" href="#calc">Калькулятор</a><a class="l" href="#prices">Цены</a><a class="l" href="#reviews">Отзывы</a><a class="l" href="#faq">FAQ</a><span id="clk" class="px" style="font-size:10px">00:00</span><a class="btn s" href="https://t.me/pixeldesk_help">Telegram</a></nav>
+</div></header>
+
+<div class="wrap" id="top">
+<div class="hero">
+<div class="win"><div class="tb px"><span>welcome.exe</span><u></u><u></u></div><div class="bd">
+<h1 class="px">Ускорю твой ПК. Напишу <em>бота</em>. Сделаю сайт.</h1>
+<div class="type" id="ty"></div>
+<p class="lead">Оптимизация через AnyDesk, Telegram-боты и сайты под ключ. 370+ отзывов, и все положительные.</p>
+<div class="cta"><a class="btn" href="https://t.me/pixeldesk_help">Написать</a><a class="btn c" href="#calc">Рассчитать цену</a></div>
+</div></div>
+<div class="win"><div class="tb c2 px"><span>Рабочий стол</span><u></u><u></u></div><div class="bd icons">
+<a href="#services"><span class="e">🖥️</span>Мой ПК</a><a href="#services"><span class="e">🤖</span>Боты</a><a href="#services"><span class="e">🌐</span>Сайты</a>
+<a href="#calc"><span class="e">🧮</span>Калькулятор</a><a href="#reviews"><span class="e">⭐</span>Отзывы</a><a href="#faq"><span class="e">❓</span>Помощь</a>
+</div></div>
+</div>
+
+<div class="stats">
+<div class="st"><b data-n="370">0</b>отзывов (370+)</div>
+<div class="st"><b>100%</b>положительных</div>
+<div class="st"><b>24/7</b>боты на связи</div>
+<div class="st"><b>30 мин</b>оптимизация ПК</div>
+</div>
+
+<div class="mq px" style="font-size:11px"><div><span>> ОПТИМИЗАЦИЯ ПК</span><span>*</span><span>> TELEGRAM-БОТЫ</span><span>*</span><span>> САЙТЫ ПОД КЛЮЧ</span><span>*</span><span>> БОЛЬШЕ FPS</span><span>*</span><span>> ЧЕРЕЗ ANYDESK</span><span>*</span><span>> ОПТИМИЗАЦИЯ ПК</span><span>*</span><span>> TELEGRAM-БОТЫ</span><span>*</span><span>> САЙТЫ ПОД КЛЮЧ</span><span>*</span><span>> БОЛЬШЕ FPS</span><span>*</span><span>> ЧЕРЕЗ ANYDESK</span><span>*</span></div></div>
+
+<section id="services" class="rev">
+<h2 class="px">Услуги</h2><p class="sub">Три программы на любой вкус. Запускай одну или все сразу.</p>
+<div class="g3">
+<div class="win"><div class="tb px"><span>pc_boost.exe</span><u></u><u></u></div><div class="bd"><div class="big">🖥️</div><h3 class="px">Оптимизация ПК</h3><p>Подключаюсь через AnyDesk, ты видишь каждое моё действие.</p><ul><li>Чистка и автозагрузка</li><li>Драйверы и Windows</li><li>Меньше лагов, больше FPS</li><li>Температуры и шум</li></ul></div></div>
+<div class="win"><div class="tb c2 px"><span>tg_bot.exe</span><u></u><u></u></div><div class="bd"><div class="big">🤖</div><h3 class="px">Telegram-боты</h3><p>Бот работает за тебя круглосуточно.</p><ul><li>Заявки и заказы</li><li>Оплата и рассылки</li><li>Админка и статистика</li><li>Запуск на хостинге</li></ul></div></div>
+<div class="win"><div class="tb y2 px"><span>site_maker.exe</span><u></u><u></u></div><div class="bd"><div class="big">🌐</div><h3 class="px">Сайты</h3><p>Лендинги и сайты услуг с адаптивом под телефон.</p><ul><li>Уникальный дизайн</li><li>Быстрая загрузка</li><li>Помощь с публикацией</li><li>Правки после сдачи</li></ul></div></div>
+</div>
+</section>
+
+<section id="calc" class="rev">
+<h2 class="px">Калькулятор заказа</h2><p class="sub">Отметь, что нужно, и получи примерную цену. Заказ отправится готовым сообщением в Telegram.</p>
+<div class="win"><div class="tb y2 px"><span>calc.exe</span><u></u><u></u></div>
+<div class="calc"><div class="bd opts">
+<label><input type="checkbox" data-p="500" data-t="Оптимизация ПК"><span>Оптимизация ПК</span><b>500 ₽</b></label>
+<label><input type="checkbox" data-p="500" data-t="Простой бот"><span>Простой Telegram-бот</span><b>от 500 ₽</b></label>
+<label><input type="checkbox" data-p="1500" data-t="Бот с оплатой и базой"><span>Бот с оплатой и базой</span><b>от 1 500 ₽</b></label>
+<label><input type="checkbox" data-p="1500" data-t="Лендинг"><span>Лендинг или визитка</span><b>от 1 500 ₽</b></label>
+<label><input type="checkbox" data-p="4000" data-t="Многостраничный сайт"><span>Многостраничный сайт</span><b>от 4 000 ₽</b></label>
+</div><div class="res"><div>Итого, примерно:</div><div class="tot" id="tot">0 ₽</div><small>Точную цену назову после обсуждения, до начала работы.</small><a class="btn y" id="ord" href="https://t.me/pixeldesk_help">Заказать</a></div></div></div>
+</section>
+
+<section id="prices" class="rev">
+<h2 class="px">Прайс</h2><p class="sub">Без скрытых доплат.</p>
+<div class="prc">
+<div class="win"><div class="tb px"><span>pc.txt</span><u></u><u></u></div><div class="bd"><h3 class="px">Оптимизация ПК</h3><div class="n">500 ₽</div><p>за один сеанс</p><ul><li>AnyDesk-подключение</li><li>Чистка и настройка</li><li>Советы по уходу</li></ul><a class="btn s" href="https://t.me/pixeldesk_help">Заказать</a></div></div>
+<div class="win hot"><div class="tb c2 px"><span>bots.txt</span><u></u><u></u></div><div class="bd"><h3 class="px">Telegram-бот</h3><div class="n">от 500 ₽</div><ul><li>Простой - от 500 ₽</li><li>Средний - от 1 500 ₽</li><li>Сложный - по договорённости</li></ul><a class="btn s c" href="https://t.me/pixeldesk_help">Заказать</a></div></div>
+<div class="win"><div class="tb y2 px"><span>sites.txt</span><u></u><u></u></div><div class="bd"><h3 class="px">Сайт</h3><div class="n">от 1 500 ₽</div><ul><li>Лендинг - от 1 500 ₽</li><li>Много страниц - от 4 000 ₽</li><li>Адаптив под телефон</li></ul><a class="btn s y" href="https://t.me/pixeldesk_help">Заказать</a></div></div>
+</div>
+</section>
+
+<section class="rev">
+<h2 class="px">Как всё проходит</h2><p class="sub">Загрузка результата:</p>
+<div class="bar" id="bar"><i></i></div>
+<div class="stp"><div><em>01</em>Пишешь мне в Telegram</div><div><em>02</em>Согласуем цену и срок</div><div><em>03</em>Делаю удалённо</div><div><em>04</em>Принимаешь и платишь</div></div>
+</section>
+
+<section id="reviews" class="rev">
+<h2 class="px">Отзывы</h2><p class="sub">370+ клиентов, и все остались довольны.</p>
+<div class="g3">
+<div class="win"><div class="tb px"><span>chat_01</span><u></u><u></u></div><div class="bd"><div class="stars">★★★★★</div><div class="bub">Windows стал работать заметно быстрее. Рекомендую.</div><p>Клиент, оптимизация ПК</p></div></div>
+<div class="win"><div class="tb c2 px"><span>chat_02</span><u></u><u></u></div><div class="bd"><div class="stars">★★★★★</div><div class="bub">Бот сделан быстро и ровно так, как я хотел.</div><p>Клиент, Telegram-бот</p></div></div>
+<div class="win"><div class="tb y2 px"><span>chat_03</span><u></u><u></u></div><div class="bd"><div class="stars">★★★★★</div><div class="bub">Быстро, вежливо, без лишних слов. Буду обращаться ещё.</div><p>Клиент, сайт</p></div></div>
+</div>
+</section>
+
+<section id="faq" class="rev">
+<h2 class="px">FAQ</h2><br>
+<details><summary>Что такое AnyDesk и это безопасно?</summary><p>Это программа удалённого доступа. Ты сам даёшь код, видишь всё, что я делаю, и можешь отключить меня в любую секунду.</p></details>
+<details><summary>Сколько занимает оптимизация?</summary><p>Обычно 30-60 минут, зависит от состояния компьютера.</p></details>
+<details><summary>Как платить?</summary><p>Способ оплаты согласуем в переписке.</p></details>
+<details><summary>Можно заказать сразу бота и сайт?</summary><p>Да, при заказе нескольких услуг сделаю скидку.</p></details>
+</section>
+
+<section class="rev fin"><div class="win"><div class="tb px"><span>contact.exe</span><u></u><u></u></div><div class="bd"><h2 class="px" style="margin-bottom:14px">Готов начать?</h2><p class="sub">Напиши - отвечу и сразу назову цену.</p><a class="btn" href="https://t.me/pixeldesk_help">@pixeldesk_help</a></div></div></section>
+<footer>© 2026 PixelDesk - оптимизация ПК, боты, сайты</footer>
+</div>
+
+<script>
+(function(){
+var T="Подключаюсь через AnyDesk. Ты всё видишь.",ty=document.getElementById("ty"),i=0;
+function w(){ty.innerHTML=T.slice(0,i)+'<span class="cur"></span>';if(i<T.length){i++;setTimeout(w,55)}}
+setTimeout(w,1800);
+function tick(){var d=new Date();document.getElementById("clk").textContent=("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2)}
+tick();setInterval(tick,20000);
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("in")})},{threshold:.1});
+document.querySelectorAll(".rev").forEach(function(e){io.observe(e)});
+new IntersectionObserver(function(e){if(e[0].isIntersecting)e[0].target.classList.add("in")},{threshold:.5}).observe(document.getElementById("bar"));
+var n=document.querySelector("[data-n]"),v=0;
+(function c(){v+=Math.ceil((370-v)/10);n.textContent=v+"+";if(v<370)setTimeout(c,50)})();
+var cb=document.querySelectorAll(".opts input"),tot=document.getElementById("tot"),ord=document.getElementById("ord");
+function calc(){var s=0,l=[];cb.forEach(function(c){if(c.checked){s+=+c.dataset.p;l.push(c.dataset.t)}});
+tot.textContent=s.toLocaleString("ru-RU")+" ₽";
+var m=l.length?"Здравствуйте! Хочу заказать: "+l.join(", ")+".":"Здравствуйте! Хочу заказать услугу.";
+ord.href="https://t.me/pixeldesk_help?text="+encodeURIComponent(m)}
+cb.forEach(function(c){c.addEventListener("change",calc)});calc();
+var cv=document.getElementById("cv"),x=cv.getContext("2d"),P=[],cols=["#ff4fa3","#3df5ff","#ffe14d","#5dff8a"];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
+for(var k=0;k<40;k++)P.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:4+Math.floor(Math.random()*3)*4,v:.2+Math.random()*.6,c:cols[k%4]});
+function f(){x.clearRect(0,0,cv.width,cv.height);P.forEach(function(p){p.y+=p.v;if(p.y>cv.height){p.y=-10;p.x=Math.random()*cv.width}x.globalAlpha=.35;x.fillStyle=p.c;x.fillRect(p.x|0,p.y|0,p.s,p.s)});requestAnimationFrame(f)}
+if(!matchMedia("(prefers-reduced-motion:reduce)").matches)f();
+})();
+</script>
+</body>
+</html>
